@@ -23,20 +23,20 @@ template <typename Elemento> void desencolar(Cola<Elemento>& c);
 //Devuelve el primer elemento encolado de "c"
 template <typename Elemento> void primero(const Cola<Elemento>& c, Elemento& dato, bool& error);
 
-//
+//Si la cola está vacia devuelve true, en caso de que no esté vacia devulve false
 template <typename Elemento> bool esVacia(const Cola<Elemento>& c);
 
-//
-// template <typename Elemento> int longitud(const Cola<Elemento>& c);
+//Devuelve el número de elementos que tiene la cola
+template <typename Elemento> int longitud(const Cola<Elemento>& c);
 
 //
-// template <typename Elemento> void iniciarIterador(Cola<Elemento>& c);
+template <typename Elemento> void iniciarIterador(Cola<Elemento>& c);
 
 //
-// template <typename Elemento> bool haySiguiente(const Cola<Elemento>& c);
+ template <typename Elemento> bool haySiguiente(const Cola<Elemento>& c);
 
 //
-// template <typename Elemento> bool siguiente(Cola<Elemento>& c, Elemento& dato);
+ template <typename Elemento> bool siguienteYavanza(Cola<Elemento>& c, Elemento& dato);
 
 
 
@@ -48,10 +48,10 @@ template <typename Elemento> struct Cola{
     friend void desencolar<Elemento>(Cola<Elemento>& c);
     friend void primero<Elemento>(const Cola<Elemento>& c, Elemento& dato, bool& error);
     friend bool esVacia<Elemento>(const Cola<Elemento>& c);
-    // friend int longitud<Elemento>(const Cola<Elemento>& c);
-    // friend void iniciarIterador<Elemento>(Cola<Elemento>& c);
-    // friend bool haySiguiente<Elemento>(const Cola<Elemento>& c);
-    // friend bool siguiente<Elemento>(Cola<Elemento>& c, Elemento& dato);
+    friend int longitud<Elemento>(const Cola<Elemento>& c);
+    friend void iniciarIterador<Elemento>(Cola<Elemento>& c);
+    friend bool haySiguiente<Elemento>(const Cola<Elemento>& c);
+    friend bool siguienteYavanza<Elemento>(Cola<Elemento>& c, Elemento& dato);
     private:
     struct Nodo {
         Elemento valor;
@@ -94,6 +94,7 @@ template <typename Elemento> void desencolar(Cola<Elemento>& c){
     }else if (c.elPrimero->siguiente== nullptr){ // un elemento en la cola
         c.elPrimero = nullptr;
         c.elUltimo = nullptr;
+        c.numDatos--;
     }
     
         
@@ -110,15 +111,34 @@ template <typename Elemento> void primero(const Cola<Elemento>& c, Elemento& dat
     }
 }
 template <typename Elemento> bool esVacia(const Cola<Elemento>& c){
-    
+    return c.elPrimero == nullptr;
 }
-// template <typename Elemento> int longitud(const Cola<Elemento>& c);
+template <typename Elemento> int longitud(const Cola<Elemento>& c){
+    return c.numDatos;
+}
 
 // Cola<Elemento>& cDestino);
 
-// template <typename Elemento> void iniciarIterador(Cola<Elemento>& c);
-// template <typename Elemento> bool haySiguiente(const Cola<Elemento>& c);
-// template <typename Elemento> bool siguiente(Cola<Elemento>& c, Elemento& dato);
+template <typename Elemento> void iniciarIterador(Cola<Elemento>& c){
+    Elemento dato;
+    bool error;
+    primero(c,dato, error);
+    if(!error){
+        c.iter->siguiente=c.elPrimero;
+    }
+}
+template <typename Elemento> bool haySiguiente(const Cola<Elemento>& c){
+    return c.iter->siguiente == nullptr;
+}
+template <typename Elemento> bool siguienteYavanza(Cola<Elemento>& c, Elemento& dato){
+    if(haySiguiente(c)){
+        dato = (c.iter->siguiente)->valor;
+        c.iter=c.iter->siguiente;
+        return true;
+    }else{
+        return false;
+    }
+}
 
 
 
