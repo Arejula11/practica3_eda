@@ -56,136 +56,57 @@ template <typename Elemento> struct Colaprio{
     friend void iniciarIterador<Elemento>(Colaprio<Elemento>& c);
     friend bool haySiguiente<Elemento>(const Colaprio<Elemento>& c);
     friend bool siguienteYavanza<Elemento>(Colaprio<Elemento>& c, Elemento& dato);
+    
     private:
-    struct Nodo {
-        Elemento valor;
-        Nodo* siguiente;
-        bool prioridad;
-    };
-    Nodo* elPrimero ;
-    // Nodo* elPrimerioprio;
-    Nodo* elUltimo;
-    Nodo* elUltimoprio;
-    int numDatos;
-    int numDatosprio;
-    Nodo* iter;
-    Nodo* aux;
-    Cola<Elemento> c1;
+        Cola<Elemento> prioritaria;
+        Cola<Elemento> normal;
 
 };
 
 // IMPLEMENTACIÓN DE LAS OPERACIONES DEL TAD GENÉRICO cola
 
 template <typename Elemento> void vacia(Colaprio<Elemento>& c){
-    c.elPrimero = nullptr;
-    c.elUltimo = nullptr;
-    c.elUltimoprio = nullptr;
-    c.numDatos = 0;
+    vacia(c.prioritaria);
+    vacia(c.normal);
 }
+    
 template <typename Elemento> void encolar(Colaprio<Elemento>& c, const Elemento& dato, const bool prio){
-    // if(prio){
-    //     if(c.numDatos + c.numDatosprio == 0){ // lista vacia 
-    //         c.elUltimoprio = new typename Colaprio<Elemento>::Nodo; // asignar nullptr
-    //         c.elPrimero = c.elUltimoprio;
-    //         c.elUltimo = c.elUltimoprio;
-    //         // c.elUltimo->siguiente = nullptr;
-    //         // c.elUltimoprio->siguiente = nullptr; // preguntar si al crear el nodo se pone el siguiente a nullptr
-    //     }else{ // lista no vacia 
-    //         c.aux = c.elUltimoprio;
-    //         c.elUltimoprio = new typename Colaprio<Elemento>::Nodo;
-    //         c.elUltimoprio->siguiente= c.aux->siguiente;
-    //     }
-    //     c.elUltimoprio->valor = dato;
-    //     c.numDatosprio++;
-    //     c.elUltimo->prioridad = prio;
-    // }else{ // preguntar como usar encolar de cola.hpp
-    //     if(c.numDatos + c.numDatosprio == 0){
-    //         c.elUltimo = new typename Colaprio<Elemento>::Nodo;
-    //         c.elPrimero = c.elUltimo;
-    //     }else{
-    //         c.elUltimo->siguiente = new typename Colaprio<Elemento>::Nodo;
-    //         c.elUltimo = c.elUltimo->siguiente;
-    //     }
-    //     c.elUltimo->valor = dato;
-    //     c.elUltimo->siguiente= nullptr;
-    //     c.numDatos++;
-    //     c.elUltimo->prioridad = prio;
-        encolar(c.c1, dato);
-    //}
+    if(prio){
+        encolar(c.prioritaria, dato);
+    }else{
+        encolar(c.normal, dato);
+    }
     
 }
-template <typename Elemento> void desencolar(Colaprio<Elemento>& c){ // preguntar como usar desencolar de cola.hpp
-    // if(c.elPrimero->prioridad){
-    //     if (c.elPrimero != nullptr && c.elPrimero->siguiente != nullptr){ // lista  no vacia && mas de un elemento
-    //     c.aux = c.elPrimero;
-    //     delete typename Cola<Elemento>::Nodo(c.elPrimero);  //preguntar cual elimina
-    //     c.elPrimero  = c.aux;
-    //     c.numDatosprio--;
-    //     }
-    //     else if (c.elPrimero->siguiente == nullptr){ // un elemento en la cola
-    //         c.elUltimo = nullptr;
-    //         c.numDatosprio--;
-    //         delete typename Cola<Elemento>::Nodo(c.elPrimero); 
-    //         c.elPrimero = nullptr;
-    //     }
-    // }else{
-    //     if (c.elPrimero != nullptr && c.elPrimero->siguiente != nullptr){ // lista  no vacia && mas de un elemento
-    //     c.aux = c.elPrimero;
-    //     delete typename Cola<Elemento>::Nodo(c.elPrimero);  //preguntar cual elimina
-    //     c.elPrimero  = c.aux;
-    //     c.numDatos--;
-    //     }
-    //     else if (c.elPrimero->siguiente == nullptr){ // un elemento en la cola
-    //         c.elUltimo = nullptr;
-    //         c.numDatos--;
-    //         delete typename Cola<Elemento>::Nodo(c.elPrimero); 
-    //         c.elPrimero = nullptr;
-    //     }
-    // }
-
-    // if(c.elPrimero->siguiente == nullptr){//caso solo un elemento
-    //         c.elUltimo = nullptr;
-    //         delete typename Cola<Elemento>::Nodo(c.elPrimero); 
-    //         c.elPrimero = nullptr;
-    //         if (c.elPrimero->prioridad){ //si c.elUltimoprio== nullptr sabemos q es no prio
-    //             c.numDatosprio--;
-    //         }else{
-    //             c.numDatos--;
-    //         }
-    // }
-    // if(c.elPrimero != nullptr && c.elPrimero->siguiente != nullptr && c.elPrimero=c.elUltimoprio ){ // caso un prio y mas de un no prio
-    //     c.elUltimoprio = nullptr;
-
-    // }
-    // caso de mas de un prio
-    //caso de no haya prio y mas de un no prio ( desencolar cola.hpp)
-    
-    
+template <typename Elemento> void desencolar(Colaprio<Elemento>& c){ 
+    if(esVacia(c.prioritaria)){
+        desencolar(c.normal);
+    }else{
+        desencolar(c.prioritaria);
+    }
         
     
 }
 
 template <typename Elemento> void primero(const Colaprio<Elemento>& c, Elemento& dato, bool& error){
-    if(c.elPrimero!=nullptr){
-        dato=c.elPrimero->valor;
-        error=false;
-
+    if(esVacia(c.prioritaria)){
+        primero(c.normal,dato,error);
     }else{
-        error=true;
+        primero(c.prioritaria, dato, error);
     }
 }
 template <typename Elemento> bool esVacia(const Colaprio<Elemento>& c){
-    return c.elPrimero == nullptr && c.elPrimerioprio == nullptr;
+    return esVacia(c.prioritaria) && esVacia(c.normal);
 }
 template <typename Elemento> int longitud(const Colaprio<Elemento>& c){
-    return c.numDatos+c.numDatosprio;
+    return longitud(c.prioritaria) + longitud(c.normal);
 }
 
 template <typename Elemento> int longClase(const Colaprio<Elemento>& c, const bool prio){
     if (prio){
-        return c.numDatosprio;
+        return longitud(c.prioritaria);
     }else{
-        return c.numDatos;
+        return longitud(c.normal);
     }
 }
     
@@ -194,21 +115,19 @@ template <typename Elemento> int longClase(const Colaprio<Elemento>& c, const bo
 
 
 template <typename Elemento> void iniciarIterador(Colaprio<Elemento>& c){
-    Elemento dato;
-    bool error;
-    primero(c,dato, error);
-    if(!error){
-        c.iter->siguiente=c.elPrimero;
-    }
+    iniciarIterador(c.normal);
+    iniciarIterador(c.prioritaria);
 }
 template <typename Elemento> bool haySiguiente(const Colaprio<Elemento>& c){
-    return c.iter->siguiente == nullptr;
+    return haySiguiente(c.prioritaria) || haySiguiente(c.normal);
 }
 template <typename Elemento> bool siguienteYavanza(Colaprio<Elemento>& c, Elemento& dato){
     if(haySiguiente(c)){
-        dato = (c.iter->siguiente)->valor;
-        c.iter=c.iter->siguiente;
-        return true;
+        if(esVacia(c.prioritaria)){
+            return siguienteYavanza(c.normal,dato);
+        }else{
+            return siguienteYavanza(c.prioritaria, dato);
+        }
     }else{
         return false;
     }

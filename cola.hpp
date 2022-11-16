@@ -71,7 +71,6 @@ private:
     Nodo *elUltimo;
     int numDatos;
     Nodo *iter;
-    Nodo* aux; //aux en la funcion
 };
 
 // IMPLEMENTACIÓN DE LAS OPERACIONES DEL TAD GENÉRICO cola
@@ -84,10 +83,8 @@ void vacia(Cola<Elemento> &c)
     c.numDatos = 0;
 }
 template <typename Elemento>
-void encolar(Cola<Elemento> &c, const Elemento &dato)
-{
-
-    if (c.numDatos == 0)
+void encolar(Cola<Elemento> &c, const Elemento &dato){
+    if (c.elPrimero == nullptr)
     {
         c.elUltimo = new typename Cola<Elemento>::Nodo;
         c.elPrimero = c.elUltimo;
@@ -96,6 +93,8 @@ void encolar(Cola<Elemento> &c, const Elemento &dato)
     {
         c.elUltimo->siguiente = new typename Cola<Elemento>::Nodo;
         c.elUltimo = c.elUltimo->siguiente;
+        
+
     }
     c.elUltimo->valor = dato;
     c.elUltimo->siguiente = nullptr;
@@ -105,15 +104,16 @@ template <typename Elemento>
 void desencolar(Cola<Elemento> &c)
 {
     if (c.elPrimero != nullptr && c.elPrimero->siguiente != nullptr){ // lista  no vacia && mas de un elemento
-        c.aux = c.elPrimero;
+        typename Cola<Elemento>::Nodo* aux;
+        aux = c.elPrimero;
         delete c.elPrimero;  //preguntar cual elimina
-        c.elPrimero  = c.aux;
+        c.elPrimero  = aux;
         c.numDatos--;
     }
     else if (c.elPrimero->siguiente == nullptr){ // un elemento en la cola
         c.elUltimo = nullptr;
         c.numDatos--;
-        delete typename Cola<Elemento>::Nodo(c.elPrimero); 
+        delete c.elPrimero; 
         c.elPrimero = nullptr;
     }
 }
@@ -145,28 +145,22 @@ int longitud(const Cola<Elemento> &c)
 // Cola<Elemento>& cDestino);
 
 template <typename Elemento>
-void iniciarIterador(Cola<Elemento> &c)
-{
-    Elemento dato;
-    bool error;
-    primero(c, dato, error);
-    if (!error)
-    {
+void iniciarIterador(Cola<Elemento> &c){
         c.iter->siguiente = c.elPrimero;
-    }
 }
 template <typename Elemento>
 bool haySiguiente(const Cola<Elemento> &c)
 {
-    return c.iter->siguiente == nullptr;
+    return c.iter->siguiente != nullptr;
 }
 template <typename Elemento>
-bool siguienteYavanza(Cola<Elemento> &c, Elemento &dato)
-{
-    if (haySiguiente(c))
-    {
-        dato = (c.iter->siguiente)->valor;
+bool siguienteYavanza(Cola<Elemento> &c, Elemento &dato){
+    typename Cola<Elemento>::Nodo* aux;
+    if (haySiguiente(c)){
         c.iter = c.iter->siguiente;
+        dato = c.iter->valor; //siguiente
+        aux = c.iter->siguiente; //avanza
+        c.iter->siguiente = aux->siguiente;
         return true;
     }
     else

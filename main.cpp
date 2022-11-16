@@ -23,7 +23,7 @@ using namespace std;
 int main() {
     
     Colaprio<string> c;
-    
+    vacia(c);
     ifstream inf;
     inf.open("entrada.txt");
     ofstream outf;
@@ -34,7 +34,10 @@ int main() {
     string separador = "---";
     
     while (inf >> instruccion) {
+            
+
         getline(inf, salto);
+        
         if (instruccion == "EP") {
             string elemento;
             getline(inf,elemento);
@@ -70,25 +73,31 @@ int main() {
 			int longi;
 			
             
-			// AQUÍ FALTA COMPLETAR CÓDIGO
+			longitud(c);
 			
             outf << "LONGITUD " << longi << endl;
         } else if (instruccion == "LP") {
 	    int longi;
 			
-	    // AQUÍ FALTA COMPLETAR CÓDIGO
+	    longClase(c,true);
 			
             outf << "LONGPRI " << longi << endl;
         } else if (instruccion == "LN") {
 	    int longi;
 			
-	    // AQUÍ FALTA COMPLETAR CÓDIGO
+	    
+	    longClase(c,true);
 			
             outf << "LONGNOPRI " << longi << endl;
         } else if (instruccion == "M") {
-			
-            // AQUÍ FALTA COMPLETAR CÓDIGO
-			
+			string dato;
+            iniciarIterador(c);
+			while (haySiguiente(c)){
+               if(siguienteYavanza(c,dato)){
+               outf<<dato<<endl;
+               }
+            }
+            
         }
     }
     
