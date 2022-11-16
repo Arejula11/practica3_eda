@@ -1,4 +1,4 @@
-/* Nombre, apellidos y NIP del (de los) autor(es).
+/* Pablo Ernesto Angusto Delgado 842255 y  Miguel Aréjula Aisa 850068
 */
 
 #include <iostream>
@@ -22,7 +22,7 @@ using namespace std;
  * */
 int main() {
     
-    // AQUÍ FALTA COMPLETAR CÓDIGO
+    Colaprio<string> c;
     
     ifstream inf;
     inf.open("entrada.txt");
@@ -39,21 +39,21 @@ int main() {
             string elemento;
             getline(inf,elemento);
 			
-            // AQUÍ FALTA COMPLETAR CÓDIGO
+            encolar(c,elemento,true);
 			
             outf << "ENCOLADO PRIO " << elemento << endl;
         } else if (instruccion == "EN") {
             string elemento;
             getline(inf,elemento);
 			
-            // AQUÍ FALTA COMPLETAR CÓDIGO
-			
+            encolar(c,elemento,false);
+
             outf << "ENCOLADO NO PRIO " << elemento << endl;
         } else if (instruccion == "P") {
             string elemento;
             bool error;
 			
-            // AQUÍ FALTA COMPLETAR CÓDIGO
+            primero(c,elemento,error);
 			
             if (error) {
                 outf << "NO HAY" << endl;
@@ -61,13 +61,15 @@ int main() {
                 outf << "PRIMERO " << elemento << endl;
             }
         } else if (instruccion == "D") {
-			
-            // AQUÍ FALTA COMPLETAR CÓDIGO
-			
+
+            
+			desencolar(c);
+
             outf << "DESENCOLADO" << endl;
         } else if (instruccion == "L") {
 			int longi;
 			
+            
 			// AQUÍ FALTA COMPLETAR CÓDIGO
 			
             outf << "LONGITUD " << longi << endl;
