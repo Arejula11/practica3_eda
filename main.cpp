@@ -25,7 +25,7 @@ int main() {
     Colaprio<string> c;
     vacia(c);
     ifstream inf;
-    inf.open("entrada.txt");
+    inf.open("entrada.txt"); 
     ofstream outf;
     outf.open("salida.txt");
     
@@ -73,31 +73,32 @@ int main() {
 			int longi;
 			
             
-			longitud(c);
+			longi = longitud(c);
 			
             outf << "LONGITUD " << longi << endl;
         } else if (instruccion == "LP") {
 	    int longi;
 			
-	    longClase(c,true);
+	    longi = longClase(c,true);
 			
             outf << "LONGPRI " << longi << endl;
         } else if (instruccion == "LN") {
 	    int longi;
 			
 	    
-	    longClase(c,true);
+	     longi = longClase(c,true);
 			
             outf << "LONGNOPRI " << longi << endl;
         } else if (instruccion == "M") {
 			string dato;
+            outf<<separador<< "LISTADO" <<separador<<endl;
             iniciarIterador(c);
 			while (haySiguiente(c)){
-               if(siguienteYavanza(c,dato)){
-               outf<<dato<<endl;
+                if(siguienteYavanza(c,dato)){
+                    outf<<dato<<endl;
                }
             }
-            
+            outf<<separador<<endl;
         }
     }
     
