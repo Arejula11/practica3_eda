@@ -71,7 +71,7 @@ private:
     Nodo *elUltimo;
     int numDatos;
     Nodo *iter;
-    Nodo* aux;
+    Nodo* aux; //aux en la funcion
 };
 
 // IMPLEMENTACIÓN DE LAS OPERACIONES DEL TAD GENÉRICO cola
@@ -106,7 +106,7 @@ void desencolar(Cola<Elemento> &c)
 {
     if (c.elPrimero != nullptr && c.elPrimero->siguiente != nullptr){ // lista  no vacia && mas de un elemento
         c.aux = c.elPrimero;
-        delete typename Cola<Elemento>::Nodo(c.elPrimero);  //preguntar cual elimina
+        delete c.elPrimero;  //preguntar cual elimina
         c.elPrimero  = c.aux;
         c.numDatos--;
     }

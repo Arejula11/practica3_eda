@@ -5,7 +5,7 @@
 
 #include "cola.hpp"
 
-using namespace std;
+// using namespace std;
 
 // PREDECLARACIÓN DEL TAD GENÉRICO cola
 
@@ -70,6 +70,8 @@ template <typename Elemento> struct Colaprio{
     int numDatosprio;
     Nodo* iter;
     Nodo* aux;
+    Cola<Elemento> c1;
+
 };
 
 // IMPLEMENTACIÓN DE LAS OPERACIONES DEL TAD GENÉRICO cola
@@ -81,34 +83,35 @@ template <typename Elemento> void vacia(Colaprio<Elemento>& c){
     c.numDatos = 0;
 }
 template <typename Elemento> void encolar(Colaprio<Elemento>& c, const Elemento& dato, const bool prio){
-    if(prio){
-        if(c.numDatos + c.numDatosprio == 0){ // lista vacia 
-            c.elUltimoprio = new typename Colaprio<Elemento>::Nodo;
-            c.elPrimero = c.elUltimoprio;
-            c.elUltimo = c.elUltimoprio;
-            // c.elUltimo->siguiente = nullptr;
-            // c.elUltimoprio->siguiente = nullptr; // preguntar si al crear el nodo se pone el siguiente a nullptr
-        }else{ // lista no vacia 
-            c.aux = c.elUltimoprio;
-            c.elUltimoprio = new typename Colaprio<Elemento>::Nodo;
-            c.elUltimoprio->siguiente= c.aux->siguiente;
-        }
-        c.elUltimoprio->valor = dato;
-        c.numDatosprio++;
-        c.elUltimo->prioridad = prio;
-    }else{ // preguntar como usar encolar de cola.hpp
-        if(c.numDatos + c.numDatosprio == 0){
-            c.elUltimo = new typename Colaprio<Elemento>::Nodo;
-            c.elPrimero = c.elUltimo;
-        }else{
-            c.elUltimo->siguiente = new typename Colaprio<Elemento>::Nodo;
-            c.elUltimo = c.elUltimo->siguiente;
-        }
-        c.elUltimo->valor = dato;
-        c.elUltimo->siguiente= nullptr;
-        c.numDatos++;
-        c.elUltimo->prioridad = prio;
-    }
+    // if(prio){
+    //     if(c.numDatos + c.numDatosprio == 0){ // lista vacia 
+    //         c.elUltimoprio = new typename Colaprio<Elemento>::Nodo; // asignar nullptr
+    //         c.elPrimero = c.elUltimoprio;
+    //         c.elUltimo = c.elUltimoprio;
+    //         // c.elUltimo->siguiente = nullptr;
+    //         // c.elUltimoprio->siguiente = nullptr; // preguntar si al crear el nodo se pone el siguiente a nullptr
+    //     }else{ // lista no vacia 
+    //         c.aux = c.elUltimoprio;
+    //         c.elUltimoprio = new typename Colaprio<Elemento>::Nodo;
+    //         c.elUltimoprio->siguiente= c.aux->siguiente;
+    //     }
+    //     c.elUltimoprio->valor = dato;
+    //     c.numDatosprio++;
+    //     c.elUltimo->prioridad = prio;
+    // }else{ // preguntar como usar encolar de cola.hpp
+    //     if(c.numDatos + c.numDatosprio == 0){
+    //         c.elUltimo = new typename Colaprio<Elemento>::Nodo;
+    //         c.elPrimero = c.elUltimo;
+    //     }else{
+    //         c.elUltimo->siguiente = new typename Colaprio<Elemento>::Nodo;
+    //         c.elUltimo = c.elUltimo->siguiente;
+    //     }
+    //     c.elUltimo->valor = dato;
+    //     c.elUltimo->siguiente= nullptr;
+    //     c.numDatos++;
+    //     c.elUltimo->prioridad = prio;
+        encolar(c.c1, dato);
+    //}
     
 }
 template <typename Elemento> void desencolar(Colaprio<Elemento>& c){ // preguntar como usar desencolar de cola.hpp
@@ -140,20 +143,20 @@ template <typename Elemento> void desencolar(Colaprio<Elemento>& c){ // pregunta
     //     }
     // }
 
-    if(c.elPrimero->siguiente == nullptr){//caso solo un elemento
-            c.elUltimo = nullptr;
-            delete typename Cola<Elemento>::Nodo(c.elPrimero); 
-            c.elPrimero = nullptr;
-            if (c.elPrimero->prioridad){ //si c.elUltimoprio== nullptr sabemos q es no prio
-                c.numDatosprio--;
-            }else{
-                c.numDatos--;
-            }
-    }
-    if(c.elPrimero != nullptr && c.elPrimero->siguiente != nullptr && c.elPrimero=c.elUltimoprio ){ // caso un prio y mas de un no prio
-        c.elUltimoprio = nullptr;
+    // if(c.elPrimero->siguiente == nullptr){//caso solo un elemento
+    //         c.elUltimo = nullptr;
+    //         delete typename Cola<Elemento>::Nodo(c.elPrimero); 
+    //         c.elPrimero = nullptr;
+    //         if (c.elPrimero->prioridad){ //si c.elUltimoprio== nullptr sabemos q es no prio
+    //             c.numDatosprio--;
+    //         }else{
+    //             c.numDatos--;
+    //         }
+    // }
+    // if(c.elPrimero != nullptr && c.elPrimero->siguiente != nullptr && c.elPrimero=c.elUltimoprio ){ // caso un prio y mas de un no prio
+    //     c.elUltimoprio = nullptr;
 
-    }
+    // }
     // caso de mas de un prio
     //caso de no haya prio y mas de un no prio ( desencolar cola.hpp)
     
