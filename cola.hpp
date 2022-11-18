@@ -10,14 +10,14 @@ using namespace std;
 
 template <typename Elemento> struct Cola;
 
-// Devuelve  una cola vacia, 0 elementos
+// Crea  una cola vacia, 0 elementos
 template <typename Elemento> void vacia(Cola<Elemento> &c);
 
 // Devuelve la cola resultante de añadir un elemento "e" a "c"
 template <typename Elemento>
 void encolar(Cola<Elemento> &c, const Elemento &dato);
 
-// Si "c" no es vacía, devuelve la cola resultante de eliminar el primer
+// Si esVacia(c), devuelve la cola vacia. Si "c" no es vacía, devuelve la cola resultante de eliminar el primer
 // elemento encolado a "c"
 template <typename Elemento> void desencolar(Cola<Elemento> &c);
 
@@ -25,20 +25,29 @@ template <typename Elemento> void desencolar(Cola<Elemento> &c);
 template <typename Elemento>
 void primero(const Cola<Elemento> &c, Elemento &dato, bool &error);
 
-// Si la cola está vacia devuelve true, en caso de que no esté vacia devulve
-// false
+// Solo si la cola está vacia devuelve true, en caso contario devulve false
 template <typename Elemento> bool esVacia(const Cola<Elemento> &c);
 
-// Devuelve el número de elementos que tiene la cola
+// Devuelve el número de elementos que tiene la cola "c"
 template <typename Elemento> int longitud(const Cola<Elemento> &c);
 
-//
+// Prepara el iterador para que el sigugiente elemento a visitar sea el primero 
+// de la cola "c" (entendido según la operación primero(c) previamente especificada),
+// si es que existe
 template <typename Elemento> void iniciarIterador(Cola<Elemento> &c);
 
-//
+// Devuelve falso si ya se han visitado todos los elementos de "c", devuelve verdad 
+//en caso contrario
 template <typename Elemento> bool haySiguiente(const Cola<Elemento> &c);
 
-//
+// Devuelve el siguiente elemento prioritario de c que fue encolado, si lo hay; si por el
+// contrario ya no hay más elementos prioritarios en c pendientes de visitar, devuelve el
+// siguiente elemento no prioritario de c que fue encolado, si lo hay. Además Devuelve la 
+// cola resultante de avanzar el iterador en c al siguiente elemento prioritario que fue 
+// encolado y pendiente de visitar, si lo hay; si por el contrario ya no hay más elementos 
+// prioritarios en c pendientes de visitar, avanza al siguiente elemento no prioritario de
+// c pendiente de visitar, si lo hay.
+// Parcial: la operación no está definida si no existeSiguiente(c).
 template <typename Elemento>
 bool siguienteYavanza(Cola<Elemento> &c, Elemento &dato);
 
@@ -69,12 +78,15 @@ private:
 
 // IMPLEMENTACIÓN DE LAS OPERACIONES DEL TAD GENÉRICO cola
 
+// Crea  una cola vacia, 0 elementos
 template <typename Elemento> void vacia(Cola<Elemento> &c) {
   c.elPrimero = nullptr;
   c.elUltimo = nullptr;
   c.numDatos = 0;
   c.iter = nullptr;
 }
+
+// Devuelve la cola resultante de añadir un elemento "e" a "c"
 template <typename Elemento>
 void encolar(Cola<Elemento> &c, const Elemento &dato) {
   if (c.elPrimero == nullptr) {
@@ -88,7 +100,10 @@ void encolar(Cola<Elemento> &c, const Elemento &dato) {
   c.elUltimo->siguiente = nullptr;
   c.numDatos++;
 }
-template <typename Elemento> void desencolar(Cola<Elemento> &c) {
+
+// Si esVacia(c), devuelve la cola vacia. Si "c" no es vacía, devuelve la cola resultante de eliminar el primer
+// elemento encolado a "c"
+template <typename Elemento> void desencolar(Cola<Elemento> &c) { // repasar en caso de que la cola este vacia 
   if (c.elPrimero != nullptr &&
       c.elPrimero->siguiente != nullptr) { // lista  no vacia && mas de un elemento
     typename Cola<Elemento>::Nodo *aux;
@@ -105,6 +120,7 @@ template <typename Elemento> void desencolar(Cola<Elemento> &c) {
    c.numDatos--;
 }
 
+// Devuelve el primer elemento encolado de "c"
 template <typename Elemento>
 void primero(const Cola<Elemento> &c, Elemento &dato, bool &error) {
   if (c.elPrimero != nullptr) {
@@ -114,20 +130,35 @@ void primero(const Cola<Elemento> &c, Elemento &dato, bool &error) {
     error = true;
   }
 }
+// Solo si la cola está vacia devuelve true, en caso contario devulve false
 template <typename Elemento> bool esVacia(const Cola<Elemento> &c) {
   return c.elPrimero == nullptr;
 }
+// Devuelve el número de elementos que tiene la cola "c"
 template <typename Elemento> int longitud(const Cola<Elemento> &c) {
   return c.numDatos;
 }
 
-
+// Prepara el iterador para que el sigugiente elemento a visitar sea el primero 
+// de la cola "c" (entendido según la operación primero(c) previamente especificada),
+// si es que existe
 template <typename Elemento> void iniciarIterador(Cola<Elemento> &c) {
   c.iter = c.elPrimero;
 }
+// Devuelve falso si ya se han visitado todos los elementos de "c", devuelve verdad 
+//en caso contrario
 template <typename Elemento> bool haySiguiente(const Cola<Elemento> &c) {
   return c.iter != nullptr;
 }
+
+// Devuelve el siguiente elemento prioritario de c que fue encolado, si lo hay; si por el
+// contrario ya no hay más elementos prioritarios en c pendientes de visitar, devuelve el
+// siguiente elemento no prioritario de c que fue encolado, si lo hay. Además Devuelve la 
+// cola resultante de avanzar el iterador en c al siguiente elemento prioritario que fue 
+// encolado y pendiente de visitar, si lo hay; si por el contrario ya no hay más elementos 
+// prioritarios en c pendientes de visitar, avanza al siguiente elemento no prioritario de
+// c pendiente de visitar, si lo hay.
+// Parcial: la operación no está definida si no existeSiguiente(c).
 template <typename Elemento>
 bool siguienteYavanza(Cola<Elemento> &c, Elemento &dato) {
   typename Cola<Elemento>::Nodo* aux;
