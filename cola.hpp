@@ -106,7 +106,7 @@ void encolar(Cola<Elemento> &c, const Elemento &dato) {
 template <typename Elemento> void desencolar(Cola<Elemento> &c) { // repasar en caso de que la cola este vacia 
   if (c.elPrimero != nullptr &&
       c.elPrimero->siguiente != nullptr) { // lista  no vacia && mas de un elemento
-    typename Cola<Elemento>::Nodo *aux;
+    typename Cola<Elemento>::Nodo* aux;
     aux = c.elPrimero;
     delete c.elPrimero; 
     c.elPrimero = aux->siguiente;
