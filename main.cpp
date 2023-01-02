@@ -27,7 +27,7 @@ int main() {
     ifstream inf;
     inf.open("entrada.txt"); 
     ofstream outf;
-    outf.open("salida.txt");
+    outf.open("salida2.txt");
     
     string instruccion;
     string salto;
@@ -65,9 +65,10 @@ int main() {
             }
         } else if (instruccion == "D") {
 
-            
+           
 			desencolar(c);
 
+            
             outf << "DESENCOLADO" << endl;
         } else if (instruccion == "L") {
 			int longi;
