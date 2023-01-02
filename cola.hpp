@@ -40,6 +40,7 @@ void encolar(Cola<Elemento> &c, const Elemento &dato);
 // false 
 // Parametros:
 //    Entrada/salida: c de tipo Cola
+//    Salida: booleano
 template <typename Elemento> bool esVacia(const Cola<Elemento> &c);
 
 // Si esVacia(c), devuelve la cola vacia. Si NOT esVacia(c), devuelve la cola
@@ -59,6 +60,7 @@ void primero(const Cola<Elemento> &c, Elemento &dato, bool &error);
 // Devuelve el número de elementos que tiene la cola c
 // Parametros:
 //    Entrada/salida:  c de tipo Cola
+//    Salida: entero
 template <typename Elemento> int longitud(const Cola<Elemento> &c);
 
 // Prepara el iterador para que el siguiente elemento a visitar sea el primero
@@ -68,8 +70,10 @@ template <typename Elemento> int longitud(const Cola<Elemento> &c);
 template <typename Elemento> void iniciarIterador(Cola<Elemento> &c);
 
 // Devuelve falso si ya se han visitado todos los elementos de c, en caso
-// contrario devuelve verdad Parametros:
+// contrario devuelve verdad 
+// Parametros:
 //    Entrada/salida:  c de tipo Cola
+//    Salida: booleano
 template <typename Elemento> bool haySiguiente(const Cola<Elemento> &c);
 
 // Devuelve el siguiente elemento de c que fue encolado, si lo hay.
@@ -80,6 +84,7 @@ template <typename Elemento> bool haySiguiente(const Cola<Elemento> &c);
 // existeSiguiente(c).
 // Parametros:
 //    Entrada/salida:  c de tipo Cola,  dato de tipo elemento
+//    Salida: booleano
 template <typename Elemento>
 bool siguienteYavanza(Cola<Elemento> &c, Elemento &dato);
 
@@ -121,6 +126,8 @@ private:
 // Crea  una cola vacia con 0 elementos, para 
 // ello inicializa todas las variables de la cola
 // Coste constante en tiempo O(1)
+// Parametros:
+//    Entrada/salida: c de tipo Cola
 template <typename Elemento> void vacia(Cola<Elemento> &c) {
   c.elPrimero = nullptr;
   c.elUltimo = nullptr;
@@ -135,6 +142,7 @@ template <typename Elemento> void vacia(Cola<Elemento> &c) {
 // El coste de esta operación es constante O(1)
 // Parametros:
 //    Entrada/salida: c de tipo Cola
+//    Salida booleano
 template <typename Elemento> bool esVacia(const Cola<Elemento> &c) {
   return c.elPrimero == nullptr;
 }
@@ -196,8 +204,7 @@ void desencolar(
 // El coste de la operación es constante O(1)
 // Parametros:
 //    Entrada:  dato de tipo elemento
-//    Salida:   error de tipo booleano
-//    Entrada/salida:  c de tipo Cola
+//    Entrada/salida:  c de tipo Cola, error de tipo booleano
 template <typename Elemento>
 void primero(const Cola<Elemento> &c, Elemento &dato, bool &error) {
   if (esVacia(c)) {
@@ -212,6 +219,7 @@ void primero(const Cola<Elemento> &c, Elemento &dato, bool &error) {
 // El coste de la operación es constante O(1)
 // Parametros:
 //    Entrada/salida:  c de tipo Cola
+//    Salida: entero
 template <typename Elemento> int longitud(const Cola<Elemento> &c) {
   return c.numDatos;
 }
@@ -232,6 +240,7 @@ template <typename Elemento> void iniciarIterador(Cola<Elemento> &c) {
 // El coste de la operación es constante O(1)
 // Parametros:
 //    Entrada/salida:  c de tipo Cola
+//    Salida: booleano
 template <typename Elemento> bool haySiguiente(const Cola<Elemento> &c) {
   return c.iter != nullptr;
 }
@@ -248,6 +257,7 @@ template <typename Elemento> bool haySiguiente(const Cola<Elemento> &c) {
 // El coste de la operación es constante O(1)
 // Parametros:
 //    Entrada/salida:  c de tipo Cola,  dato de tipo elemento
+//    Salida: booleano
 template <typename Elemento>
 bool siguienteYavanza(Cola<Elemento> &c, Elemento &dato) {
   typename Cola<Elemento>::Nodo *aux;
